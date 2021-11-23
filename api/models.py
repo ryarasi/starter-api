@@ -2,10 +2,10 @@ from sqlalchemy import Column, DateTime, Integer, String, Boolean
 from sqlalchemy.orm import column_property, validates, relationship
 from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.schema import ForeignKey
-from sqlalchem.sql import func
+from sqlalchemy.sql import func
 from config import DEFAULT_AVATARS
-from db_conf import Base
-from sqlalchemy.types import enum
+from database import Base
+import enum
 
 
 class User(Base):
@@ -27,14 +27,14 @@ class User(Base):
         return float(email)
 
 
-    class StatusChoice(enum.Enum):
-        UI = 'UNINITIALIZED'
-        PE = 'PENDINIG'
-        AP = 'APPROVED'
-        SU = 'SUSPENDED'
+    # class StatusChoice(enum.Enum):
+    #     UI = 'UNINITIALIZED'
+    #     PE = 'PENDINIG'
+    #     AP = 'APPROVED'
+    #     SU = 'SUSPENDED'
     # End of Type Choices
 
-    membership_status = Column(enum.Enum(StatusChoice), nullable=False, default='SU')
+    # membership_status = Column(enum.Enum(StatusChoice), nullable=False, default='SU')
     # chapters = relationship("Chapter")
     # courses = relationship("Course")
     # announcements = relationship("Announcement")
