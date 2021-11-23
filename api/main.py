@@ -2,16 +2,12 @@ from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from starlette.graphql import GraphQLApp
 import graphene
 import uvicorn
-from .database import SessionLocal, engine
 import os
 
-from sqlalchemy.orm import Session
-from . import models
-models.Base.metadata.create_all(bind=engine)
-
-from .gqQueries import Query
-from .gqMutations import Mutation
-from .gqSubscriptions import Subscription
+from database import SessionLocal, engine
+# from gqQueries import Query
+# from gqMutations import Mutation
+# from gqSubscriptions import Subscription
 
 # Dependency
 def get_db(request: Request):
@@ -40,8 +36,8 @@ host = str(os.getenv('HOST','0.0.0.0'))
 def Home():
     return "Service is Running..."
 
-app.add_route("/graphql", GraphQLApp(schema=graphene.Schema(query=Query, mutation=Mutation,
-                         subscription=Subscription)))
+# app.add_route("/graphql", GraphQLApp(schema=graphene.Schema(query=Query, mutation=Mutation,
+#                          subscription=Subscription)))
 
 
 
