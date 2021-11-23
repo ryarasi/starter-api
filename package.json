@@ -5,6 +5,8 @@
   "scripts": {
     "build": "docker-compose -f docker-compose-dev.yml up --build",
     "start": "docker-compose -f docker-compose-dev.yml up",
+    "makemigrations": "docker-compose exec web alembic revision --autogenerate -m 'New Migration'",
+    "migrate": "docker-compose exec web alembic upgrade head",
     "golive": "git checkout master && git merge dev && git push && git checkout dev"
   },
   "repository": {
