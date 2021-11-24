@@ -7,7 +7,7 @@ POSTGRES_DB = str(os.getenv('POSTGRES_DB','db'))
 POSTGRES_USER = str(os.getenv('POSTGRES_USER','user'))
 POSTGRES_PASSWORD = str(os.getenv('POSTGRES_PASSWORD','password'))
 
-SQLALCHEMY_DATABASE_URL = "postgresql+psycopg2://" + POSTGRES_USER + ":" + POSTGRES_PASSWORD + "@db:5432/" + POSTGRES_DB
+SQLALCHEMY_DATABASE_URL = "postgresql://" + POSTGRES_USER + ":" + POSTGRES_PASSWORD + "@db:5432/" + POSTGRES_DB
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}

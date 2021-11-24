@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 
 services:
   db:
@@ -10,12 +10,21 @@ services:
     networks:
       - api_network
     restart: always
-
+  pg_admin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - 5000:80
+    environment:
+      - GUNICORN_THREADS=1
+      - PGADMIN_DEFAULT_EMAIL=admin@email.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - db
   web:
     build: ./api/.
     env_file:
       - .env
-    command: uvicorn main:app --host web --port 80
+    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
     depends_on:
       - db
     networks:
@@ -32,8 +41,11 @@ services:
     networks:
       - api_network
     ports:
-      - ${PORT}:80
+      - 8000:80
     restart: always
+
+volumes:
+  database-data:
 
 networks:
   api_network:
