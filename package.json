@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "A quick boilerplate API using FastAPI with Postgres, Docker, NGINX",
   "scripts": {
-    "build": "docker-compose up --build",
-    "start": "docker-compose up",
+    "build": "docker compose up --build",
+    "start": "docker compose up",
     "makemigrations": "docker-compose run web alembic revision --autogenerate -m 'New Migration'",
     "migrate": "docker-compose run web alembic upgrade head",
     "reset": "docker-compose rm -f && docker-compose pull && docker-compose up",
