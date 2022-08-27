@@ -1,32 +1,32 @@
 version: "3.9"
 
 services:
-  db:
-    image: "postgres:13-alpine"
-    env_file:
-      - .env
-    volumes:
-      - ./db_data/:/var/lib/postgresql/data/
-    networks:
-      - api_network
-    restart: always
-  pg_admin:
-    image: dpage/pgadmin4:latest
-    ports:
-      - 5000:80
-    environment:
-      - GUNICORN_THREADS=1
-      - PGADMIN_DEFAULT_EMAIL=admin@email.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    depends_on:
-      - db
+  # db:
+  #   image: "postgres:13-alpine"
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./db_data/:/var/lib/postgresql/data/
+  #   networks:
+  #     - api_network
+  #   restart: always
+  # pg_admin:
+  #   image: dpage/pgadmin4:latest
+  #   ports:
+  #     - 5000:80
+  #   environment:
+  #     - GUNICORN_THREADS=1
+  #     - PGADMIN_DEFAULT_EMAIL=admin@email.com
+  #     - PGADMIN_DEFAULT_PASSWORD=admin
+  #   depends_on:
+  #     - db
   web:
     build: ./api/.
     env_file:
       - .env
-    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
-    depends_on:
-      - db
+    # command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    # depends_on:
+    #   - db
     networks:
       - api_network
     restart: always
@@ -36,7 +36,7 @@ services:
     volumes:
       - ./server/html_files/:/usr/share/nginx/html
     depends_on:
-      - db
+      # - db
       - web
     networks:
       - api_network
