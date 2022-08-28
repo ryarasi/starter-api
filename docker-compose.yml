@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  db:
+    image: "postgres:13-alpine"
+    env_file:
+      - .env
+    volumes:
+      - ./db_data/:/var/lib/postgresql/data/
+    networks:
+      - api_network
+    restart: always
+
+  web:
+    build: ./api/.
+    env_file:
+      - .env
+    command: python main.py
+    depends_on:
+      - db
+    networks:
+      - api_network
+    restart: always
+
+  server:
+    build: ./server/.
+    volumes:
+      - ./server/html_files/:/usr/share/nginx/html
+    depends_on:
+      - db
+      - web
+    networks:
+      - api_network
+    ports:
+      - ${PORT}:80
+    restart: always
+
+networks:
+  api_network:
+    driver: bridge
